@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXA — Your Personal Reading Note</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <span class="logo-icon">
+        <svg width="32" height="36" viewBox="0 0 32 36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Rays -->
+          <line x1="16" y1="0.5" x2="16" y2="3"/>
+          <line x1="20.5" y1="1.5" x2="19.2" y2="3.8"/>
+          <line x1="11.5" y1="1.5" x2="12.8" y2="3.8"/>
+          <line x1="24" y1="4.5" x2="22.3" y2="6.2"/>
+          <line x1="8" y1="4.5" x2="9.7" y2="6.2"/>
+          <!-- Bulb body -->
+          <path d="M11.5 13.5 C11.5 10 13.5 7.5 16 7.5 C18.5 7.5 20.5 10 20.5 13.5 C20.5 15.2 19.6 16.6 18.8 17.5 L13.2 17.5 C12.4 16.6 11.5 15.2 11.5 13.5 Z"/>
+          <!-- Bulb base -->
+          <line x1="13" y1="17.5" x2="19" y2="17.5"/>
+          <line x1="13.5" y1="19" x2="18.5" y2="19"/>
+          <line x1="14.5" y1="20.5" x2="17.5" y2="20.5"/>
+          <!-- Stem -->
+          <line x1="16" y1="20.5" x2="16" y2="23.5"/>
+          <!-- Book left page -->
+          <path d="M16 23.5 C13 22.8 7.5 22.5 2 24 L2 34 C7.5 32.5 13 32.8 16 33.5 Z"/>
+          <!-- Book right page -->
+          <path d="M16 23.5 C19 22.8 24.5 22.5 30 24 L30 34 C24.5 32.5 19 32.8 16 33.5 Z"/>
+        </svg>
+      </span>
+      <div class="logo-text-wrap">
+        <span class="logo-text">NEXA</span>
+        <span class="logo-tagline">your personal reading note</span>
+      </div>
+    </div>
+    <div class="header-center">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" id="searchInput" placeholder="Search titles, authors, tags, notes…">
+        <button id="clearSearch" class="clear-search hidden">✕</button>
+        <div id="searchDropdown" class="search-dropdown hidden">
+          <div id="searchResults" class="search-results"></div>
+          <div class="search-google-row">
+            <a id="googleSearchLink" href="#" target="_blank" rel="noopener" class="google-search-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21.8 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.5c-.2 1.2-.9 2.2-2 2.9v2.4h3.2c1.9-1.7 3-4.3 3-7.1z" fill="#4285F4"/><path d="M12 22c2.7 0 5-1 6.7-2.6l-3.2-2.5c-.9.6-2 1-3.5 1-2.7 0-5-1.8-5.8-4.3H2.9v2.6C4.7 19.5 8.1 22 12 22z" fill="#34A853"/><path d="M6.2 13.6c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.2H3C2.4 8.5 2 10.2 2 12s.4 3.5 1 4.8l3.2-3.2z" fill="#FBBC05"/><path d="M12 5.4c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17 2.4 14.7 1.5 12 1.5 8.1 1.5 4.7 4 2.9 7.5l3.2 2.5C7 7.2 9.3 5.4 12 5.4z" fill="#EA4335"/></svg>
+              Search "<span id="googleSearchTerm"></span>" on Google
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button id="themeToggle" class="btn-icon" title="Toggle theme">
+        <span id="themeIcon">◑</span>
+      </button>
+      <button id="addBookBtn" class="btn-primary">+ Add Book</button>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <span id="statTotal">0 books</span>
+    <span class="stats-dot">·</span>
+    <span id="statReading">0 reading</span>
+    <span class="stats-dot">·</span>
+    <span id="statFinished">0 finished</span>
+  </div>
+
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <section class="sidebar-section">
+        <h4 class="sidebar-label">Status</h4>
+        <ul class="filter-list">
+          <li><button class="filter-btn active" data-filter="all">All Books <span id="countAll" class="count"></span></button></li>
+          <li><button class="filter-btn" data-filter="reading">Reading <span id="countReading" class="count"></span></button></li>
+          <li><button class="filter-btn" data-filter="finished">Finished <span id="countFinished" class="count"></span></button></li>
+          <li><button class="filter-btn" data-filter="to-read">To Read <span id="countToRead" class="count"></span></button></li>
+        </ul>
+      </section>
+      <section class="sidebar-section">
+        <h4 class="sidebar-label">Tags</h4>
+        <div id="tagCloud" class="tag-cloud"></div>
+      </section>
+      <section class="sidebar-section">
+        <h4 class="sidebar-label">Sort</h4>
+        <select id="sortSelect" class="sort-select">
+          <option value="date-added-desc">Date Added ↓</option>
+          <option value="date-added-asc">Date Added ↑</option>
+          <option value="title-asc">Title A–Z</option>
+          <option value="title-desc">Title Z–A</option>
+          <option value="rating-desc">Rating ↓</option>
+        </select>
+      </section>
+    </aside>
+
+    <!-- Library -->
+    <main class="main">
+      <div id="libraryView" class="book-grid"></div>
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-art"></div>
+        <h2 class="empty-title">Your reading shelf is empty</h2>
+        <p class="empty-sub">Track what you read, capture ideas that matter.</p>
+        <button class="btn-primary" onclick="openBookForm()">Add your first book →</button>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ── Book Detail Overlay ── -->
+  <div id="detailOverlay" class="overlay hidden">
+    <div class="detail-panel">
+      <div class="detail-topbar">
+        <button id="backBtn" class="btn-ghost">← Back</button>
+        <div class="detail-actions">
+          <a id="googleBookLink" href="#" target="_blank" rel="noopener" class="btn-secondary google-book-btn" title="Search on Google">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M21.8 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.5c-.2 1.2-.9 2.2-2 2.9v2.4h3.2c1.9-1.7 3-4.3 3-7.1z" fill="#4285F4"/><path d="M12 22c2.7 0 5-1 6.7-2.6l-3.2-2.5c-.9.6-2 1-3.5 1-2.7 0-5-1.8-5.8-4.3H2.9v2.6C4.7 19.5 8.1 22 12 22z" fill="#34A853"/><path d="M6.2 13.6c-.2-.6-.3-1.2-.3-1.9s.1-1.3.3-1.9V7.2H3C2.4 8.5 2 10.2 2 12s.4 3.5 1 4.8l3.2-3.2z" fill="#FBBC05"/><path d="M12 5.4c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17 2.4 14.7 1.5 12 1.5 8.1 1.5 4.7 4 2.9 7.5l3.2 2.5C7 7.2 9.3 5.4 12 5.4z" fill="#EA4335"/></svg>
+            Google
+          </a>
+          <button id="editBookBtn" class="btn-secondary">Edit</button>
+          <button id="deleteBookBtn" class="btn-danger">Delete</button>
+        </div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-sidebar">
+          <div id="detailCover" class="cover-large"></div>
+          <div class="detail-meta" id="detailMeta">
+            <h2 id="detailTitle"></h2>
+            <p id="detailAuthor" class="meta-author"></p>
+            <div id="detailRating" class="meta-stars"></div>
+            <span id="detailStatus" class="status-badge"></span>
+            <div id="detailTags" class="meta-tags"></div>
+            <p id="detailDate" class="meta-date"></p>
+            <button id="editInlineBtn" class="btn-ghost edit-inline-btn">Edit Info</button>
+          </div>
+          <div class="inline-edit-form hidden" id="inlineEditForm">
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" id="inlineTitle">
+            </div>
+            <div class="form-group">
+              <label>Author</label>
+              <input type="text" id="inlineAuthor">
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select id="inlineStatus">
+                <option value="to-read">To Read</option>
+                <option value="reading">Currently Reading</option>
+                <option value="finished">Finished</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Rating</label>
+              <div class="star-input" id="inlineRatingInput">
+                <span class="si-star" data-value="1">★</span>
+                <span class="si-star" data-value="2">★</span>
+                <span class="si-star" data-value="3">★</span>
+                <span class="si-star" data-value="4">★</span>
+                <span class="si-star" data-value="5">★</span>
+                <button type="button" id="inlineClearRating" class="clear-rating">✕</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tags</label>
+              <input type="text" id="inlineTags" placeholder="sci-fi, classics">
+            </div>
+            <div class="form-group">
+              <label>Cover Image</label>
+              <input type="url" id="inlineCover" placeholder="https://…">
+            </div>
+            <div class="form-group">
+              <label>Upload Cover</label>
+              <input type="file" id="inlineCoverFile" accept="image/jpeg,image/png,image/webp">
+            </div>
+            <div class="inline-edit-actions">
+              <button type="button" id="cancelInlineBtn" class="btn-secondary">Cancel</button>
+              <button type="button" id="saveInlineBtn" class="btn-primary">Save Changes</button>
+            </div>
+          </div>
+        </div>
+        <div class="notes-area">
+          <div class="notes-bar">
+            <h3>Notes</h3>
+            <div class="notes-actions">
+              <button id="cancelNotesBtn" class="btn-secondary hidden">Discard</button>
+              <button id="saveNotesBtn" class="btn-primary">Save</button>
+            </div>
+          </div>
+          <div id="quillEditor" class="quill-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Add / Edit Book Modal ── -->
+  <div id="formOverlay" class="overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="formTitle">Add Book</h2>
+        <button id="closeFormBtn" class="btn-icon" title="Close">✕</button>
+      </div>
+      <form id="bookForm" class="book-form" novalidate>
+        <input type="hidden" id="bookId">
+        <div class="form-grid">
+          <div class="form-group span2">
+            <label for="bookTitle">Title <span class="req">*</span></label>
+            <input type="text" id="bookTitle" placeholder="e.g. The Left Hand of Darkness" required>
+          </div>
+          <div class="form-group span2">
+            <label for="bookAuthor">Author <span class="req">*</span></label>
+            <input type="text" id="bookAuthor" placeholder="e.g. Ursula K. Le Guin" required>
+          </div>
+          <div class="form-group span2">
+            <label for="bookCover">Cover Image URL <span class="opt">(optional)</span></label>
+            <input type="url" id="bookCover" placeholder="https://…">
+          </div>
+          <div class="form-group span2">
+            <label for="bookCoverFile">Or upload cover image <span class="opt">(JPG, PNG)</span></label>
+            <input type="file" id="bookCoverFile" accept="image/jpeg,image/png,image/webp">
+          </div>
+          <div class="form-group">
+            <label for="bookStatus">Status</label>
+            <select id="bookStatus">
+              <option value="to-read">To Read</option>
+              <option value="reading">Currently Reading</option>
+              <option value="finished">Finished</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Rating</label>
+            <div id="ratingInput" class="star-input">
+              <span class="si-star" data-value="1">★</span>
+              <span class="si-star" data-value="2">★</span>
+              <span class="si-star" data-value="3">★</span>
+              <span class="si-star" data-value="4">★</span>
+              <span class="si-star" data-value="5">★</span>
+              <button type="button" id="clearRating" class="clear-rating">✕</button>
+            </div>
+          </div>
+          <div class="form-group span2">
+            <label for="bookTags">Tags <span class="opt">(comma-separated)</span></label>
+            <input type="text" id="bookTags" placeholder="e.g. sci-fi, favorites, classic">
+          </div>
+          <div class="form-group">
+            <label for="bookDateFinished">Date Finished</label>
+            <input type="date" id="bookDateFinished">
+          </div>
+          <div class="form-group">
+            <label for="bookDateStarted">Date Started</label>
+            <input type="date" id="bookDateStarted">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" id="cancelFormBtn" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary">Save Book</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
