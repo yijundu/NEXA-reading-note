@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — NEXA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body class="auth-page">
+
+  <!-- Background -->
+  <div class="l-bg">
+    <img src="bookshelf.jpg" alt="" class="l-bg-img" onerror="this.style.display='none'">
+    <div class="l-bg-overlay"></div>
+  </div>
+
+  <div class="auth-card">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <svg width="22" height="25" viewBox="0 0 32 36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="16" y1="0.5" x2="16" y2="3"/>
+        <line x1="20.5" y1="1.5" x2="19.2" y2="3.8"/>
+        <line x1="11.5" y1="1.5" x2="12.8" y2="3.8"/>
+        <line x1="24" y1="4.5" x2="22.3" y2="6.2"/>
+        <line x1="8" y1="4.5" x2="9.7" y2="6.2"/>
+        <path d="M11.5 13.5 C11.5 10 13.5 7.5 16 7.5 C18.5 7.5 20.5 10 20.5 13.5 C20.5 15.2 19.6 16.6 18.8 17.5 L13.2 17.5 C12.4 16.6 11.5 15.2 11.5 13.5 Z"/>
+        <line x1="13" y1="17.5" x2="19" y2="17.5"/>
+        <line x1="13.5" y1="19" x2="18.5" y2="19"/>
+        <line x1="14.5" y1="20.5" x2="17.5" y2="20.5"/>
+        <line x1="16" y1="20.5" x2="16" y2="23.5"/>
+        <path d="M16 23.5 C13 22.8 7.5 22.5 2 24 L2 34 C7.5 32.5 13 32.8 16 33.5 Z"/>
+        <path d="M16 23.5 C19 22.8 24.5 22.5 30 24 L30 34 C24.5 32.5 19 32.8 16 33.5 Z"/>
+      </svg>
+      <span class="auth-logo-text">NEXA</span>
+    </div>
+
+    <a href="index.html" class="auth-back">← Back</a>
+
+    <h2 class="auth-title">Welcome back</h2>
+    <p class="auth-sub">Sign in to your reading gallery.</p>
+
+    <form class="auth-form" id="loginForm" novalidate>
+      <div class="auth-field">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="auth-field">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password" required>
+      </div>
+      <div class="auth-error" id="loginError"></div>
+      <button type="submit" class="auth-submit" id="loginBtn">Sign In</button>
+    </form>
+
+    <p class="auth-switch">No account yet? <a href="signup.html">Create your gallery</a></p>
+
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // Redirect if already logged in
+    if (isLoggedIn()) window.location.href = 'app.html';
+
+    const form = document.getElementById('loginForm');
+    const err  = document.getElementById('loginError');
+    const btn  = document.getElementById('loginBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.textContent = '';
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+      const email    = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      try {
+        await login(email, password);
+        window.location.href = 'app.html';
+      } catch (ex) {
+        err.textContent = ex.message;
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>
