@@ -94,24 +94,31 @@ function switchSection(section) {
   document.getElementById('sidebarMeetings').classList.toggle('hidden', section !== 'meetings');
   document.getElementById('sidebarIdeas').classList.toggle('hidden', section !== 'ideas');
   document.getElementById('sidebarBin').classList.toggle('hidden', section !== 'bin');
+  document.getElementById('sidebarSociety').classList.toggle('hidden', section !== 'society');
 
   // Main sections
   document.getElementById('librarySection').classList.toggle('hidden', section !== 'library');
   document.getElementById('meetingsSection').classList.toggle('hidden', section !== 'meetings');
   document.getElementById('ideasSection').classList.toggle('hidden', section !== 'ideas');
   document.getElementById('binSection').classList.toggle('hidden', section !== 'bin');
+  document.getElementById('societySection').classList.toggle('hidden', section !== 'society');
 
-  // Add button — hide on Bin
-  const labels = { library: '+ Add Book', meetings: '+ Add Meeting', ideas: '+ Add Idea', bin: '' };
+  // FAB add button — hide on Bin and Society
+  const labels = { library: 'Book', meetings: 'Meeting', ideas: 'Idea' };
   const addBtn = document.getElementById('addEntryBtn');
-  addBtn.textContent = labels[section] || '';
-  addBtn.style.display = section === 'bin' ? 'none' : '';
+  const fabLabel = document.getElementById('fabAddLabel');
+  if (fabLabel) fabLabel.textContent = labels[section] || '';
+  addBtn.style.display = (section === 'bin' || section === 'society') ? 'none' : '';
 
   // Surprise btn visibility (only library)
   document.getElementById('surpriseBtn').style.display = section === 'library' ? '' : 'none';
 
+  // Society: start/stop poll & update presence
+  if (section === 'society') { startSocietyPoll(); updatePresence(); }
+  else stopSocietyPoll();
+
   // Search placeholder
-  const placeholders = { library: 'Search books…', meetings: 'Search meetings…', ideas: 'Search ideas…', bin: 'Bin' };
+  const placeholders = { library: 'Search books…', meetings: 'Search meetings…', ideas: 'Search ideas…', bin: 'Bin', society: 'Society' };
   document.getElementById('searchInput').placeholder = placeholders[section] || 'Search…';
 
   // Clear search
@@ -140,10 +147,18 @@ function updateStatsBar() {
     a.textContent = meetings.length + ' meeting' + (meetings.length !== 1 ? 's' : '');
     b.textContent = meetings.filter(x => x.status === 'upcoming').length + ' upcoming';
     c.textContent = meetings.filter(x => x.status === 'done').length + ' done';
-  } else {
+  } else if (currentSection === 'ideas') {
     a.textContent = ideas.length + ' idea' + (ideas.length !== 1 ? 's' : '');
     b.textContent = ideas.filter(x => x.status === 'spark').length + ' sparks';
     c.textContent = ideas.filter(x => x.status === 'exploring').length + ' exploring';
+  } else if (currentSection === 'society') {
+    const online = getOnlineUsers();
+    const msgs = getChatMessages();
+    a.textContent = online.length + ' online';
+    b.textContent = msgs.length + ' message' + (msgs.length !== 1 ? 's' : '');
+    c.textContent = 'Community';
+  } else {
+    a.textContent = ''; b.textContent = ''; c.textContent = '';
   }
 }
 
@@ -156,6 +171,9 @@ function updateNavCounts() {
   const binBadge = document.getElementById('navCountBin');
   binBadge.textContent = binCount;
   binBadge.classList.toggle('bin-has-items', binCount > 0);
+  const onlineCount = getOnlineUsers().length;
+  const societyBadge = document.getElementById('navCountSociety');
+  if (societyBadge) { societyBadge.textContent = onlineCount > 0 ? onlineCount : ''; }
 }
 
 function renderAll() {
@@ -176,6 +194,8 @@ function renderAll() {
     renderIdeas();
   } else if (currentSection === 'bin') {
     renderBin();
+  } else if (currentSection === 'society') {
+    renderSociety();
   }
 }
 
@@ -1263,7 +1283,7 @@ document.getElementById('ideaGoogleInput').addEventListener('keydown',e=>{
 document.getElementById('addEntryBtn').addEventListener('click',()=>{
   if(currentSection==='library') openBookForm();
   else if(currentSection==='meetings') openMeetingForm();
-  else openIdeaForm();
+  else if(currentSection==='ideas') openIdeaForm();
 });
 document.getElementById('emptyAddBookBtn').addEventListener('click',()=>openBookForm());
 document.getElementById('emptyAddMeetingBtn').addEventListener('click',()=>openMeetingForm());
@@ -1375,6 +1395,112 @@ backdropEl.addEventListener('click', closeSidebar);
 document.querySelectorAll('.filter-btn').forEach(btn=>
   btn.addEventListener('click',()=>{ if(window.innerWidth<=768) closeSidebar(); })
 );
+
+// ════════════════════════════════════════════════════════════════════════════
+// SOCIETY — Chat & Presence
+// ════════════════════════════════════════════════════════════════════════════
+const CHAT_KEY     = 'nexa_community_chat';
+const PRESENCE_KEY = 'nexa_presence';
+const MAX_MSGS     = 100;
+
+function updatePresence() {
+  if (!_currentUser) return;
+  const p = JSON.parse(localStorage.getItem(PRESENCE_KEY) || '{}');
+  p[_currentUser.id] = { name: _currentUser.name, lastSeen: Date.now() };
+  localStorage.setItem(PRESENCE_KEY, JSON.stringify(p));
+}
+
+function getOnlineUsers() {
+  const p = JSON.parse(localStorage.getItem(PRESENCE_KEY) || '{}');
+  const cutoff = Date.now() - 3 * 60 * 1000;
+  return Object.entries(p)
+    .filter(([, u]) => u.lastSeen > cutoff)
+    .map(([id, u]) => ({ id, name: u.name, isSelf: id === (_currentUser?.id) }));
+}
+
+function getChatMessages() {
+  return JSON.parse(localStorage.getItem(CHAT_KEY) || '[]');
+}
+
+function renderOnlineUsers() {
+  const list = document.getElementById('onlineUsersList');
+  if (!list) return;
+  const users = getOnlineUsers();
+  list.innerHTML = users.length
+    ? users.map(u => `
+        <div class="online-user-item${u.isSelf ? ' self' : ''}">
+          <div class="online-avatar">${u.name.slice(0,1).toUpperCase()}</div>
+          <span class="online-name">${escHtml(u.name)}${u.isSelf ? ' <span class="you-badge">you</span>' : ''}</span>
+          <span class="online-dot-indicator"></span>
+        </div>`).join('')
+    : '<p class="sidebar-hint">No one online yet — be the first!</p>';
+}
+
+function renderChatMessages() {
+  const container = document.getElementById('chatMessages');
+  if (!container) return;
+  const messages = getChatMessages();
+  const myId = _currentUser?.id;
+  if (!messages.length) {
+    container.innerHTML = `<div class="chat-empty"><div class="chat-empty-icon">💬</div><p>No messages yet — start the conversation!</p></div>`;
+    return;
+  }
+  container.innerHTML = messages.map(m => {
+    const isMine = m.userId === myId;
+    const time = new Date(m.ts).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    return `
+      <div class="chat-msg${isMine ? ' mine' : ''}">
+        ${!isMine ? `<div class="chat-avatar-sm">${m.userName.slice(0,1).toUpperCase()}</div>` : ''}
+        <div class="chat-bubble-wrap">
+          ${!isMine ? `<span class="chat-username">${escHtml(m.userName)}</span>` : ''}
+          <div class="chat-bubble">${escHtml(m.text)}</div>
+          <span class="chat-time">${time}</span>
+        </div>
+      </div>`;
+  }).join('');
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  if (!input || !_currentUser) return;
+  const text = input.value.trim();
+  if (!text) return;
+  const messages = getChatMessages();
+  messages.push({ id: generateId(), userId: _currentUser.id, userName: _currentUser.name, text, ts: Date.now() });
+  if (messages.length > MAX_MSGS) messages.splice(0, messages.length - MAX_MSGS);
+  localStorage.setItem(CHAT_KEY, JSON.stringify(messages));
+  input.value = '';
+  renderChatMessages();
+  updateStatsBar();
+}
+
+function renderSociety() {
+  updatePresence();
+  renderOnlineUsers();
+  renderChatMessages();
+}
+
+let societyPollTimer = null;
+function startSocietyPoll() {
+  if (societyPollTimer) return;
+  updatePresence();
+  societyPollTimer = setInterval(() => {
+    updatePresence();
+    renderOnlineUsers();
+    renderChatMessages();
+    updateNavCounts();
+    updateStatsBar();
+  }, 15000);
+}
+function stopSocietyPoll() {
+  if (societyPollTimer) { clearInterval(societyPollTimer); societyPollTimer = null; }
+}
+
+document.getElementById('chatSendBtn').addEventListener('click', sendChatMessage);
+document.getElementById('chatInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
+});
 
 // ════════════════════════════════════════════════════════════════════════════
 // INIT
