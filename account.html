@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings — NEXA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script src="auth.js"></script>
+  <script>requireAuth();</script>
+  <style>
+    body { font-family: 'Inter','Noto Sans SC',sans-serif; background: #f5f5f7; min-height: 100dvh; margin: 0; }
+    .acct-nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0 2rem; height: 60px;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .acct-nav-logo {
+      display: flex; align-items: center; gap: .5rem;
+      text-decoration: none; font-weight: 800; font-size: .95rem;
+      color: #111; letter-spacing: .06em;
+    }
+    .acct-back {
+      margin-left: auto;
+      display: inline-flex; align-items: center; gap: .35rem;
+      text-decoration: none; color: #555; font-size: .84rem;
+      padding: .4rem .9rem; border-radius: 100px;
+      border: 1px solid #ddd; transition: background .2s;
+    }
+    .acct-back:hover { background: #f0f0f0; }
+    .acct-body { max-width: 640px; margin: 2.5rem auto; padding: 0 1.5rem 4rem; }
+    .acct-page-title { font-size: 1.6rem; font-weight: 800; color: #111; margin-bottom: .4rem; }
+    .acct-page-sub { font-size: .88rem; color: #777; margin-bottom: 2.5rem; }
+    .acct-card {
+      background: #fff; border-radius: 16px;
+      border: 1px solid #e5e5e5; margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+    .acct-card-header {
+      padding: 1.25rem 1.5rem .75rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .acct-card-title { font-size: .95rem; font-weight: 700; color: #111; }
+    .acct-card-sub { font-size: .8rem; color: #888; margin-top: .2rem; }
+    .acct-card-body { padding: 1.25rem 1.5rem; }
+    .acct-row {
+      display: flex; align-items: center;
+      padding: .6rem 0;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    .acct-row:last-child { border-bottom: none; }
+    .acct-row-label { font-size: .8rem; font-weight: 600; color: #888; width: 100px; flex-shrink: 0; }
+    .acct-row-value { font-size: .88rem; color: #333; flex: 1; }
+    .acct-avatar-row {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: .5rem 0 1rem;
+    }
+    .acct-big-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: #1B3A5C; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 800; flex-shrink: 0;
+    }
+    .acct-avatar-info h3 { font-size: 1.1rem; font-weight: 700; color: #111; }
+    .acct-avatar-info p { font-size: .82rem; color: #888; margin-top: .2rem; }
+    .acct-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .55rem 1.1rem; border-radius: 100px;
+      font-size: .82rem; font-weight: 600; cursor: pointer;
+      border: 1px solid #ddd; background: #f5f5f7; color: #333;
+      transition: background .2s; font-family: inherit;
+      text-decoration: none;
+    }
+    .acct-btn:hover { background: #eee; }
+    .acct-btn-danger { color: #dc2626; border-color: #fca5a5; background: #fff5f5; }
+    .acct-btn-danger:hover { background: #fee2e2; }
+    .acct-btn-primary { background: #111; color: #fff; border-color: #111; }
+    .acct-btn-primary:hover { background: #333; }
+    .acct-export-info { font-size: .82rem; color: #888; margin-bottom: 1rem; line-height: 1.5; }
+    .acct-danger-text { font-size: .82rem; color: #888; margin-bottom: 1rem; line-height: 1.5; }
+    .acct-theme-row { display: flex; align-items: center; gap: .75rem; padding: .5rem 0; }
+    .acct-theme-btn {
+      padding: .45rem 1rem; border-radius: 100px; border: 1.5px solid #ddd;
+      background: #fff; font-size: .82rem; font-weight: 500; cursor: pointer;
+      transition: all .2s; font-family: inherit; color: #333;
+    }
+    .acct-theme-btn.active { border-color: #1B3A5C; background: #1B3A5C; color: #fff; }
+    .acct-theme-btn:hover:not(.active) { background: #f0f0f0; }
+    .acct-divider { height: 1px; background: #f0f0f0; margin: .75rem 0; }
+    #acctMessage { font-size: .82rem; font-weight: 600; color: #16a34a; min-height: 1.2em; margin-top: .5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="acct-nav">
+    <a href="index.html" class="acct-nav-logo">
+      <svg width="22" height="22" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="50" y1="3" x2="50" y2="8" stroke="#F59E0B" stroke-width="5"/>
+        <line x1="63" y1="6" x2="67" y2="2" stroke="#F59E0B" stroke-width="5"/>
+        <line x1="37" y1="6" x2="33" y2="2" stroke="#F59E0B" stroke-width="5"/>
+        <path d="M36 30 C36 20 42 13 50 13 C58 13 64 20 64 30 C64 36 61 40 58 43 L42 43 C39 40 36 36 36 30 Z" stroke="#1B3A5C" stroke-width="4"/>
+        <path d="M50 57 C44 54 28 53 4 58 L4 86 C28 81 44 82 50 85 Z" stroke="#1B3A5C" stroke-width="4"/>
+        <path d="M50 57 C56 54 72 53 96 58 L96 86 C72 81 56 82 50 85 Z" stroke="#1B3A5C" stroke-width="4"/>
+      </svg>
+      NEXA
+    </a>
+    <a href="app.html" class="acct-back">← Back to App</a>
+  </nav>
+
+  <div class="acct-body">
+    <h1 class="acct-page-title">Account Settings</h1>
+    <p class="acct-page-sub">Manage your profile, preferences and data.</p>
+
+    <!-- Profile -->
+    <div class="acct-card">
+      <div class="acct-card-header">
+        <div class="acct-card-title">Profile</div>
+        <div class="acct-card-sub">Your personal information</div>
+      </div>
+      <div class="acct-card-body">
+        <div class="acct-avatar-row">
+          <div class="acct-big-avatar" id="acctAvatar">?</div>
+          <div class="acct-avatar-info">
+            <h3 id="acctName">—</h3>
+            <p id="acctEmail">—</p>
+          </div>
+        </div>
+        <div class="acct-divider"></div>
+        <div class="acct-row">
+          <span class="acct-row-label">Name</span>
+          <span class="acct-row-value" id="acctNameRow">—</span>
+        </div>
+        <div class="acct-row">
+          <span class="acct-row-label">Email</span>
+          <span class="acct-row-value" id="acctEmailRow">—</span>
+        </div>
+        <div class="acct-row">
+          <span class="acct-row-label">Member since</span>
+          <span class="acct-row-value" id="acctSince">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appearance -->
+    <div class="acct-card">
+      <div class="acct-card-header">
+        <div class="acct-card-title">Appearance</div>
+        <div class="acct-card-sub">Choose your preferred theme</div>
+      </div>
+      <div class="acct-card-body">
+        <div class="acct-theme-row">
+          <button class="acct-theme-btn" id="themeLightBtn">☀️ Light</button>
+          <button class="acct-theme-btn" id="themeDarkBtn">🌙 Dark</button>
+          <button class="acct-theme-btn" id="themeAutoBtn">💻 System</button>
+        </div>
+        <p id="acctMessage"></p>
+      </div>
+    </div>
+
+    <!-- Data -->
+    <div class="acct-card">
+      <div class="acct-card-header">
+        <div class="acct-card-title">Your Data</div>
+        <div class="acct-card-sub">Export or manage your NEXA data</div>
+      </div>
+      <div class="acct-card-body">
+        <p class="acct-export-info">Download all your books, meetings, and ideas as a JSON file. Your data is always yours.</p>
+        <button class="acct-btn acct-btn-primary" id="exportBtn">⬇ Export All Data</button>
+      </div>
+    </div>
+
+    <!-- Sign Out -->
+    <div class="acct-card">
+      <div class="acct-card-header">
+        <div class="acct-card-title">Session</div>
+      </div>
+      <div class="acct-card-body">
+        <p class="acct-danger-text">You are currently signed in. Signing out will clear your session — your data will remain saved.</p>
+        <button class="acct-btn acct-btn-danger" id="acctLogoutBtn">Sign Out</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const user = getCurrentUser();
+    if (user) {
+      const initial = user.name ? user.name[0].toUpperCase() : '?';
+      document.getElementById('acctAvatar').textContent = initial;
+      document.getElementById('acctName').textContent = user.name;
+      document.getElementById('acctEmail').textContent = user.email || '—';
+      document.getElementById('acctNameRow').textContent = user.name;
+      document.getElementById('acctEmailRow').textContent = user.email || '—';
+      document.getElementById('acctSince').textContent = user.createdAt
+        ? new Date(user.createdAt).toLocaleDateString(undefined, {year:'numeric',month:'long',day:'numeric'})
+        : '—';
+    }
+
+    // Theme
+    const savedTheme = localStorage.getItem('nexa_theme') || 'auto';
+    function updateThemeBtns(t) {
+      document.getElementById('themeLightBtn').classList.toggle('active', t === 'light');
+      document.getElementById('themeDarkBtn').classList.toggle('active', t === 'dark');
+      document.getElementById('themeAutoBtn').classList.toggle('active', t === 'auto' || !t);
+    }
+    updateThemeBtns(savedTheme);
+    ['Light','Dark','Auto'].forEach(name => {
+      document.getElementById('theme'+name+'Btn').addEventListener('click', () => {
+        const t = name.toLowerCase();
+        localStorage.setItem('nexa_theme', t);
+        updateThemeBtns(t);
+        document.getElementById('acctMessage').textContent = 'Theme saved! Changes apply in the app.';
+        setTimeout(() => document.getElementById('acctMessage').textContent = '', 2500);
+      });
+    });
+
+    // Export data
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      if (!user) return;
+      const uid = user.id;
+      const data = {
+        exportedAt: new Date().toISOString(),
+        user: { name: user.name, email: user.email },
+        books:    JSON.parse(localStorage.getItem('nexa_books_' + uid) || '[]'),
+        meetings: JSON.parse(localStorage.getItem('nexa_meetings_' + uid) || '[]'),
+        ideas:    JSON.parse(localStorage.getItem('nexa_ideas_' + uid) || '[]'),
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'nexa-export-' + new Date().toISOString().slice(0,10) + '.json';
+      a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Sign out
+    document.getElementById('acctLogoutBtn').addEventListener('click', logout);
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

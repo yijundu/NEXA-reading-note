@@ -9,8 +9,35 @@ const GOAL_KEY     = 'nexa_goal_'     + uid;
 if (_currentUser) {
   const nameEl = document.getElementById('userDisplayName');
   if (nameEl) nameEl.textContent = _currentUser.name;
+  const initial = _currentUser.name ? _currentUser.name[0].toUpperCase() : '?';
+  const chip = document.getElementById('userAvatarChip');
+  if (chip) chip.textContent = initial;
+  const dropAvatar = document.getElementById('userDropAvatar');
+  if (dropAvatar) dropAvatar.textContent = initial;
+  const dropName = document.getElementById('userDropName');
+  if (dropName) dropName.textContent = _currentUser.name;
+  const dropEmail = document.getElementById('userDropEmail');
+  if (dropEmail) dropEmail.textContent = _currentUser.email || '';
 }
+
+// User dropdown toggle
+const userMenuBtn = document.getElementById('userMenuBtn');
+const userDropdown = document.getElementById('userDropdown');
+if (userMenuBtn && userDropdown) {
+  userMenuBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    userDropdown.classList.toggle('open');
+  });
+  document.addEventListener('click', () => userDropdown.classList.remove('open'));
+}
+
 document.getElementById('logoutBtn').addEventListener('click', logout);
+
+// Sidebar Bin buttons
+['libraryBinBtn','meetingsBinBtn','ideasBinBtn'].forEach(id => {
+  const btn = document.getElementById(id);
+  if (btn) btn.addEventListener('click', () => switchSection('bin'));
+});
 
 // ── State ────────────────────────────────────────────────────────────────────
 let books    = JSON.parse(localStorage.getItem(BOOKS_KEY)    || '[]');
