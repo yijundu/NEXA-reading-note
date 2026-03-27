@@ -3,211 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEXA — Read deeply. Meet effectively. Think freely.</title>
+  <title>NEXA — Read Deeply. Meet Effectively. Think Freely.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="landing.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body class="landing-page marketing-page">
+<body>
 
-  <!-- ── TOP NAV ── -->
-  <nav class="mkt-nav">
-    <a href="index.html" class="mkt-nav-logo">
-      <svg width="28" height="28" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="50" y1="3" x2="50" y2="8" stroke="#F59E0B" stroke-width="4"/>
-        <line x1="63" y1="6" x2="67" y2="2" stroke="#F59E0B" stroke-width="4"/>
-        <line x1="37" y1="6" x2="33" y2="2" stroke="#F59E0B" stroke-width="4"/>
-        <path d="M36 30 C36 20 42 13 50 13 C58 13 64 20 64 30 C64 36 61 40 58 43 L42 43 C39 40 36 36 36 30 Z" stroke="white" stroke-width="3.5"/>
-        <line x1="42" y1="43" x2="58" y2="43" stroke="white" stroke-width="3.5"/>
-        <line x1="44" y1="48" x2="56" y2="48" stroke="white" stroke-width="3.5"/>
-        <line x1="47" y1="53" x2="53" y2="53" stroke="white" stroke-width="3.5"/>
-        <path d="M50 57 C44 54 28 53 4 58 L4 86 C28 81 44 82 50 85 Z" stroke="white" stroke-width="3.5"/>
-        <path d="M50 57 C56 54 72 53 96 58 L96 86 C72 81 56 82 50 85 Z" stroke="white" stroke-width="3.5"/>
+  <!-- NAV -->
+  <nav class="ln-nav">
+    <a href="index.html" class="ln-logo">
+      <svg width="26" height="26" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="50" y1="3" x2="50" y2="8" stroke="#C8963E" stroke-width="4"/>
+        <line x1="63" y1="6" x2="67" y2="2" stroke="#C8963E" stroke-width="4"/>
+        <line x1="37" y1="6" x2="33" y2="2" stroke="#C8963E" stroke-width="4"/>
+        <path d="M36 30 C36 20 42 13 50 13 C58 13 64 20 64 30 C64 36 61 40 58 43 L42 43 C39 40 36 36 36 30 Z" stroke="#1C1814" stroke-width="3.5"/>
+        <line x1="42" y1="43" x2="58" y2="43" stroke="#1C1814" stroke-width="3.5"/>
+        <line x1="44" y1="48" x2="56" y2="48" stroke="#1C1814" stroke-width="3.5"/>
+        <line x1="47" y1="53" x2="53" y2="53" stroke="#1C1814" stroke-width="3.5"/>
+        <path d="M50 57 C44 54 28 53 4 58 L4 86 C28 81 44 82 50 85 Z" stroke="#1C1814" stroke-width="3.5"/>
+        <path d="M50 57 C56 54 72 53 96 58 L96 86 C72 81 56 82 50 85 Z" stroke="#1C1814" stroke-width="3.5"/>
       </svg>
       <span>NEXA</span>
     </a>
-    <div class="mkt-nav-links">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="#community">Community</a>
+    <div class="ln-nav-links">
+      <a href="#library">Library</a>
+      <a href="#meetings">Meetings</a>
+      <a href="#ideas">Ideas</a>
+      <a href="#society">Society</a>
     </div>
-    <div class="mkt-nav-auth">
-      <a href="login.html" class="mkt-signin-btn">Sign In</a>
-      <a href="signup.html" class="mkt-start-btn">Get Started →</a>
+    <div class="ln-nav-auth">
+      <a href="login.html" class="ln-signin">Sign In</a>
+      <a href="signup.html" class="ln-start">Get Started →</a>
     </div>
-    <!-- Mobile hamburger -->
-    <button class="mkt-hamburger" id="mktHamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
   </nav>
 
-  <!-- ── HERO ── -->
-  <section class="mkt-hero">
-    <div class="l-bg">
-      <img src="bookshelf.jpg" alt="" class="l-bg-img" onerror="this.style.display='none'">
-      <div class="l-bg-overlay mkt-hero-overlay"></div>
+  <!-- HERO -->
+  <section class="ln-hero">
+    <p class="ln-hero-eyebrow">Personal Knowledge Management</p>
+    <h1 class="ln-hero-title">NEXA</h1>
+    <p class="ln-hero-tagline">Read deeply &nbsp;·&nbsp; Meet effectively &nbsp;·&nbsp; Think freely</p>
+    <div class="ln-hero-arch">
+      <img src="bookshelf.jpg" alt="Books on a shelf" onerror="this.style.display='none'">
     </div>
-    <div class="mkt-hero-content">
-      <p class="mkt-hero-eyebrow">Your personal knowledge space</p>
-      <h1 class="mkt-hero-title">Read deeply.<br>Meet effectively.<br>Think freely.</h1>
-      <p class="mkt-hero-sub">NEXA brings together your reading notes, meeting records, creative ideas, and a community of curious minds — all in one beautiful, private space.</p>
-      <div class="mkt-hero-cta">
-        <a href="signup.html" class="mkt-btn-primary">Create Your Free Space →</a>
-        <a href="login.html" class="mkt-btn-ghost">Sign In</a>
+    <span class="ln-hero-corner ln-hero-corner--l">Est. 2024</span>
+    <span class="ln-hero-corner ln-hero-corner--r">Your Space</span>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="ln-features">
+
+    <div class="ln-features-label">
+      <span class="ln-num">01</span>
+      <span class="ln-tag">+ Explore Features</span>
+    </div>
+
+    <!-- Library -->
+    <div class="ln-row" id="library">
+      <div class="ln-row-img">
+        <img src="img-library.jpg" alt="Library — open book pages">
+      </div>
+      <div class="ln-row-text">
+        <span class="ln-row-num">01</span>
+        <h2 class="ln-row-title">Library</h2>
+        <p class="ln-row-desc">Your personal reading space. Track every book, capture highlights and reflections with a rich-text editor. Add cover art, rate your reads and build a collection of what matters to you.</p>
+        <a href="login.html" class="ln-row-link">Enter Library →</a>
       </div>
     </div>
-    <div class="mkt-hero-scroll">
-      <span>Discover features</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+
+    <!-- Meetings -->
+    <div class="ln-row ln-row--flip" id="meetings">
+      <div class="ln-row-text">
+        <span class="ln-row-num">02</span>
+        <h2 class="ln-row-title">Meetings</h2>
+        <p class="ln-row-desc">Never lose a key decision again. Log attendees, action items and outcomes from every conversation. Rich notes with auto-save so you can focus on the discussion, not the admin.</p>
+        <a href="login.html" class="ln-row-link">Enter Meetings →</a>
+      </div>
+      <div class="ln-row-img">
+        <img src="img-meetings.jpg" alt="Meetings — writing in notebook">
+      </div>
+    </div>
+
+    <!-- Ideas -->
+    <div class="ln-row" id="ideas">
+      <div class="ln-row-img">
+        <img src="img-ideas.jpg" alt="Ideas — pen on paper">
+      </div>
+      <div class="ln-row-text">
+        <span class="ln-row-num">03</span>
+        <h2 class="ln-row-title">Ideas</h2>
+        <p class="ln-row-desc">Capture sparks of inspiration before they fade. A private space for brainstorms, half-formed thoughts and creative breakthroughs — organised by category and status.</p>
+        <a href="login.html" class="ln-row-link">Enter Ideas →</a>
+      </div>
+    </div>
+
+    <!-- Society -->
+    <div class="ln-row ln-row--flip" id="society">
+      <div class="ln-row-text">
+        <span class="ln-row-num">04</span>
+        <h2 class="ln-row-title">Society</h2>
+        <p class="ln-row-desc">Connect with curious minds. Share what you're reading, join conversations and discover what the community is thinking about. A shared space built on curiosity and exchange.</p>
+        <a href="login.html" class="ln-row-link">Enter Society →</a>
+      </div>
+      <div class="ln-row-img">
+        <img src="img-society.jpg" alt="Society — group brainstorming">
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CTA -->
+  <section class="ln-cta">
+    <p class="ln-cta-eyebrow">Get Started</p>
+    <h2 class="ln-cta-title">Begin your<br><em>NEXA</em> journey</h2>
+    <p class="ln-cta-sub">Free forever. No ads. Your notes stay private.</p>
+    <div class="ln-cta-btns">
+      <a href="signup.html" class="ln-btn-light">Create Free Account →</a>
+      <a href="login.html" class="ln-btn-ghost">Sign In</a>
     </div>
   </section>
 
-  <!-- ── FEATURES ── -->
-  <section class="mkt-features" id="features">
-    <div class="mkt-container">
-      <p class="mkt-section-eyebrow">Four spaces, one home</p>
-      <h2 class="mkt-section-title">Everything you need to capture knowledge</h2>
-      <p class="mkt-section-sub">NEXA brings together everything scattered across apps, notebooks, and sticky notes into one clean, connected space.</p>
-
-      <div class="mkt-img-grid">
-
-        <a href="login.html" class="mkt-img-card mkt-img-library">
-          <img src="img-library.jpg" alt="Library — books and reading">
-          <div class="mkt-img-overlay mkt-img-overlay-library"></div>
-          <div class="mkt-img-content">
-            <span class="mkt-img-badge badge-library">📚 Library</span>
-            <h3>Read Deeply</h3>
-            <p>Track every book, capture highlights and reflections with a rich-text editor. Cover art, ratings & reading goals included.</p>
-            <span class="mkt-img-arrow">Open Library →</span>
-          </div>
-        </a>
-
-        <a href="login.html" class="mkt-img-card mkt-img-meetings">
-          <img src="img-meetings.jpg" alt="Meetings — notes and decisions">
-          <div class="mkt-img-overlay mkt-img-overlay-meetings"></div>
-          <div class="mkt-img-content">
-            <span class="mkt-img-badge badge-meetings">💬 Meetings</span>
-            <h3>Meet Effectively</h3>
-            <p>Never lose a decision again. Log conversations, action items and key outcomes in seconds. Search your history instantly.</p>
-            <span class="mkt-img-arrow">Open Meetings →</span>
-          </div>
-        </a>
-
-        <a href="login.html" class="mkt-img-card mkt-img-ideas">
-          <img src="img-ideas.jpg" alt="Ideas — creative sparks">
-          <div class="mkt-img-overlay mkt-img-overlay-ideas"></div>
-          <div class="mkt-img-content">
-            <span class="mkt-img-badge badge-ideas">💡 Ideas</span>
-            <h3>Think Freely</h3>
-            <p>Capture sparks of inspiration the moment they appear. Develop them from a spark into something real, privately.</p>
-            <span class="mkt-img-arrow">Open Ideas →</span>
-          </div>
-        </a>
-
-        <a href="login.html" class="mkt-img-card mkt-img-society">
-          <img src="img-society.jpg" alt="Society — community and chat">
-          <div class="mkt-img-overlay mkt-img-overlay-society"></div>
-          <div class="mkt-img-content">
-            <span class="mkt-img-badge badge-society">👥 Society</span>
-            <h3>Connect & Share</h3>
-            <p>Join a community of curious minds. Share book picks, discuss ideas and see who's reading the same things as you.</p>
-            <span class="mkt-img-arrow">Open Society →</span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ── HOW IT WORKS ── -->
-  <section class="mkt-how" id="how">
-    <div class="mkt-container">
-      <p class="mkt-section-eyebrow">Simple by design</p>
-      <h2 class="mkt-section-title">How NEXA works</h2>
-      <div class="mkt-steps">
-        <div class="mkt-step">
-          <div class="mkt-step-num">01</div>
-          <h3>Create your account</h3>
-          <p>Sign up in seconds — no credit card, no subscription required. Your data is yours.</p>
-        </div>
-        <div class="mkt-step-arrow">→</div>
-        <div class="mkt-step">
-          <div class="mkt-step-num">02</div>
-          <h3>Add what matters</h3>
-          <p>Log books, meetings and ideas as they happen. Rich text editor, auto-save, always ready.</p>
-        </div>
-        <div class="mkt-step-arrow">→</div>
-        <div class="mkt-step">
-          <div class="mkt-step-num">03</div>
-          <h3>Find it instantly</h3>
-          <p>Search across all your notes, filter by tags, sort by date or rating. Knowledge at your fingertips.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── COMMUNITY ── -->
-  <section class="mkt-community" id="community">
-    <div class="mkt-community-bg">
-      <img src="bookshelf.jpg" alt="" onerror="this.style.display='none'">
-      <div class="mkt-community-overlay"></div>
-    </div>
-    <div class="mkt-container mkt-community-content">
-      <div class="mkt-community-badge">👥 Society</div>
-      <h2>Connect with fellow readers</h2>
-      <p>NEXA isn't just a private notebook — it's also a community. Share what you're reading, discuss ideas, and spark conversations with curious people just like you.</p>
-      <a href="signup.html" class="mkt-btn-primary">Join the Community →</a>
-    </div>
-  </section>
-
-  <!-- ── FINAL CTA ── -->
-  <section class="mkt-final-cta">
-    <div class="mkt-container">
-      <h2>Start building your knowledge space today</h2>
-      <p>Free forever. No ads. Your notes stay private.</p>
-      <div class="mkt-final-cta-btns">
-        <a href="signup.html" class="mkt-btn-primary mkt-btn-large">Create Your Free Account →</a>
-        <a href="login.html" class="mkt-btn-outline">Already have an account? Sign In</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ── -->
-  <footer class="mkt-footer">
-    <div class="mkt-container mkt-footer-inner">
-      <a href="index.html" class="mkt-footer-logo">
-        <svg width="20" height="20" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="50" y1="3" x2="50" y2="8" stroke="#F59E0B" stroke-width="5"/>
-          <line x1="63" y1="6" x2="67" y2="2" stroke="#F59E0B" stroke-width="5"/>
-          <line x1="37" y1="6" x2="33" y2="2" stroke="#F59E0B" stroke-width="5"/>
-          <path d="M36 30 C36 20 42 13 50 13 C58 13 64 20 64 30 C64 36 61 40 58 43 L42 43 C39 40 36 36 36 30 Z" stroke="#888" stroke-width="4"/>
-          <path d="M50 57 C44 54 28 53 4 58 L4 86 C28 81 44 82 50 85 Z" stroke="#888" stroke-width="4"/>
-          <path d="M50 57 C56 54 72 53 96 58 L96 86 C72 81 56 82 50 85 Z" stroke="#888" stroke-width="4"/>
-        </svg>
-        <span>NEXA</span>
-      </a>
-      <p class="mkt-footer-copy">© 2026 NEXA · Read deeply. Meet effectively. Think freely.</p>
-      <div class="mkt-footer-links">
-        <a href="signup.html">Sign Up</a>
-        <a href="login.html">Sign In</a>
-      </div>
+  <!-- FOOTER -->
+  <footer class="ln-footer">
+    <span>© 2026 NEXA</span>
+    <span>Read deeply · Meet effectively · Think freely</span>
+    <div class="ln-footer-links">
+      <a href="signup.html">Sign Up</a>
+      <a href="login.html">Sign In</a>
     </div>
   </footer>
 
-  <script defer src="/_vercel/insights/script.js"></script>
   <script>
-    // Smooth scroll for anchor links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
       });
-    });
-    // Hamburger toggle
-    document.getElementById('mktHamburger')?.addEventListener('click', () => {
-      document.querySelector('.mkt-nav').classList.toggle('open');
     });
   </script>
 </body>
