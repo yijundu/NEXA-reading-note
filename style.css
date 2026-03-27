@@ -1,32 +1,32 @@
 /* ── Google Fonts ───────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
 
 /* ── Reset ──────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ── Design Tokens ──────────────────────────────────────────────────────────── */
 :root {
-  --bg:           #f5f5f5;
-  --bg2:          #ffffff;
-  --bg3:          #ebebeb;
-  --bg4:          #e0e0e0;
-  --bg-card:      #ffffff;
-  --border:       rgba(0,0,0,.09);
-  --border-mid:   rgba(0,0,0,.15);
-  --border-strong:rgba(0,0,0,.25);
+  --bg:           #F5EFE3;
+  --bg2:          #FDFAF6;
+  --bg3:          #EDE6D6;
+  --bg4:          #E2D9CA;
+  --bg-card:      #FDFAF6;
+  --border:       rgba(28,24,20,.10);
+  --border-mid:   rgba(28,24,20,.16);
+  --border-strong:rgba(28,24,20,.28);
 
   /* Typography */
-  --text:         #111111;
-  --text2:        #555555;
-  --text3:        #999999;
+  --text:         #1C1814;
+  --text2:        #6E6156;
+  --text3:        #9E8E7E;
 
-  /* Greyscale accent */
-  --accent:       #111111;
-  --accent2:      #333333;
-  --accent3:      #555555;
-  --accent-dim:   #ebebeb;
-  --accent-glow:  rgba(0,0,0,.08);
-  --accent-light: #f0f0f0;
+  /* Warm accent */
+  --accent:       #1C1814;
+  --accent2:      #3D3027;
+  --accent3:      #6E6156;
+  --accent-dim:   #EDE6D6;
+  --accent-glow:  rgba(28,24,20,.07);
+  --accent-light: #F0E8D8;
 
   /* State colors */
   --danger:       #dc2626;
@@ -64,13 +64,13 @@
   --yellow-dim:   #FFFBEB;
 
   /* Elevation */
-  --shadow-xs:    0 1px 2px rgba(0,0,0,.04);
-  --shadow-sm:    0 2px 4px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-  --shadow:       0 4px 16px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
-  --shadow-md:    0 8px 24px rgba(0,0,0,.10), 0 2px 6px rgba(0,0,0,.06);
-  --shadow-lg:    0 16px 48px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.07);
-  --shadow-xl:    0 28px 72px rgba(0,0,0,.16), 0 8px 20px rgba(0,0,0,.09);
-  --shadow-cover: 0 24px 64px rgba(0,0,0,.24), 0 8px 20px rgba(0,0,0,.12);
+  --shadow-xs:    0 1px 2px rgba(28,24,20,.05);
+  --shadow-sm:    0 2px 4px rgba(28,24,20,.07), 0 1px 2px rgba(28,24,20,.04);
+  --shadow:       0 4px 16px rgba(28,24,20,.09), 0 2px 4px rgba(28,24,20,.05);
+  --shadow-md:    0 8px 24px rgba(28,24,20,.11), 0 2px 6px rgba(28,24,20,.06);
+  --shadow-lg:    0 16px 48px rgba(28,24,20,.13), 0 4px 12px rgba(28,24,20,.07);
+  --shadow-xl:    0 28px 72px rgba(28,24,20,.17), 0 8px 20px rgba(28,24,20,.09);
+  --shadow-cover: 0 24px 64px rgba(28,24,20,.25), 0 8px 20px rgba(28,24,20,.12);
 
   /* Shape */
   --r:            8px;
@@ -93,29 +93,30 @@
   --chrome-h:     calc(var(--header-h) + var(--nav-h) + var(--stats-h));
 
   --font: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
   --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
 }
 
 [data-theme="dark"] {
-  --bg:           #0d0d0d;
-  --bg2:          #1a1a1a;
-  --bg3:          #242424;
-  --bg4:          #2e2e2e;
-  --bg-card:      #1a1a1a;
-  --border:       rgba(255,255,255,.08);
-  --border-mid:   rgba(255,255,255,.14);
-  --border-strong:rgba(255,255,255,.25);
+  --bg:           #1A1410;
+  --bg2:          #231E18;
+  --bg3:          #2C2620;
+  --bg4:          #362E26;
+  --bg-card:      #231E18;
+  --border:       rgba(245,239,227,.08);
+  --border-mid:   rgba(245,239,227,.14);
+  --border-strong:rgba(245,239,227,.25);
 
-  --text:         #f0f0f0;
-  --text2:        #a0a0a0;
-  --text3:        #505050;
+  --text:         #F5EFE3;
+  --text2:        #A89880;
+  --text3:        #6E5E4E;
 
-  --accent:       #f0f0f0;
-  --accent2:      #cccccc;
-  --accent3:      #aaaaaa;
-  --accent-dim:   #242424;
-  --accent-glow:  rgba(255,255,255,.08);
-  --accent-light: #1e1e1e;
+  --accent:       #F5EFE3;
+  --accent2:      #D4C4A8;
+  --accent3:      #A89880;
+  --accent-dim:   #2C2620;
+  --accent-glow:  rgba(245,239,227,.08);
+  --accent-light: #231E18;
 
   --danger:       #f87171;
   --danger-dim:   #3a1a18;
@@ -290,19 +291,19 @@ button { cursor: pointer; font-family: var(--font); border: none; outline: none;
 
 .logo-icon {
   width: 44px; height: 44px;
-  background: #111111;
+  background: var(--dark, #1C1814);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   box-shadow: 0 2px 8px var(--accent-glow), 0 1px 2px rgba(0,0,0,.12);
-  color: #ffffff;
+  color: #F5EFE3;
 }
 
 [data-theme="dark"] .logo-icon {
-  background: #333333;
-  color: #ffffff;
+  background: #2C2620;
+  color: #F5EFE3;
 }
 
 .logo-icon svg {
@@ -310,18 +311,20 @@ button { cursor: pointer; font-family: var(--font); border: none; outline: none;
 }
 
 .logo-text {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: -.03em;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .04em;
   color: var(--text);
   white-space: nowrap;
   line-height: 1;
 }
 
 .logo-tagline {
-  font-size: .62rem;
+  font-size: .6rem;
   color: var(--text3);
-  letter-spacing: .02em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
   font-weight: 400;
   line-height: 1;
 }
